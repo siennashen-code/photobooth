@@ -1,3 +1,6 @@
+#video{
+    display: none;
+}
 .video-container {
     display: flex;
     flex-direction: column;
@@ -20,4 +23,14 @@
     z-index: 100;
     font-family: sans-serif;
 
+}
+
+#flash{
+    position: fixed;
+    width: 640px;
+    height: 480px;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: white;
 }
