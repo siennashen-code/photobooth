@@ -8,6 +8,26 @@ document.getElementById('snap').addEventListener('click', takePhotos);
 
 const photos = [];
 
+
+function wait(seconds) {
+    return new Promise(resolve => setTimeout(resolve, 1000 * seconds));
+}
+
+async function countDown(seconds) {
+    const counter = document.createElement('div');
+    counter.id = 'counter';
+    document.body.appendChild(counter);
+    
+    while (seconds > 0) {
+        counter.textContent = seconds;
+        await wait(1);
+        seconds--;
+    }
+
+    counter.remove();
+    console.log("countdown over");
+}
+
 function takePhoto() {
     const photo = document.createElement('canvas');
     const context = photo.getContext('2d');
@@ -27,44 +47,25 @@ function takePhoto() {
 
 }
 
-async function photoWithFlash() {
-    const [result1, result2] = await Promise.all([flash(), takePhoto()]);
-}
-
-function flash() {
+async function flash() {
     const flash = document.createElement('div');
-    flash.textContent = 'hi';
     flash.id = 'flash';
-    document.body.appendChild(flash);
-    const durationInSeconds = 2;
-    const startTime = Date.now(); // Get start time in milliseconds
-    while (Date.now() - startTime < durationInSeconds * 1000) {
-        // const opacity = -1 * durationInSeconds ^ 2 + durationInSeconds / 2 + 1;
-        flash.style.backgroundColor = `rgba(1, 1, 1, ${opacity})`;
-    }
     
+
+    document.body.appendChild(flash);
+
+    await wait(0.05);
+    flash.style.opacity = '0';
+    await wait(0.3);
+
     flash.remove();
-
 }
 
-function wait(seconds) {
-    return new Promise(resolve => setTimeout(resolve, 1000 * seconds));
+async function photoWithFlash() {
+    const flashPromise = flash();
+    takePhoto();
+    await flashPromise;
 }
-
-async function countDown(seconds) {
-    const counter = document.createElement('div');
-    counter.id = 'counter';
-    document.body.appendChild(counter);
-
-    while (seconds > 0) {
-        counter.textContent = seconds;
-        await wait(1);  // actually pause for 1 second
-        seconds--;
-    }
-
-    counter.remove();
-}
-
 
 async function takePhotos() {
     console.log("im here!");
