@@ -56,7 +56,6 @@
     text-shadow: 0 0 20px rgba(0, 0, 0, 0.8);
     z-index: 100;
     font-family: sans-serif;
-
 }
 
 #photostrip {
@@ -82,10 +81,18 @@
     left: 70%;
     top: 50%;
     transform: translate(-50%, -50%);
+    gap: 10px;
 }
 #save{
     position:absolute;
     left:90%;
+    top: 97%;
+    transform: translate(-50%, -50%);
+}
+
+#back{
+    position:absolute;
+    left:95%;
     top: 97%;
     transform: translate(-50%, -50%);
 }

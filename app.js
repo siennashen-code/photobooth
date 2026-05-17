@@ -16,4 +16,5 @@ document.getElementById('sammi').addEventListener('click', () => photobooth.newF
 document.getElementById('gallery').addEventListener('click', () => photobooth.newFrame(1));
 document.getElementById('goat').addEventListener('click', () => photobooth.newFrame(2));
 document.getElementById('save').addEventListener('click', () => photobooth.save());
+document.getElementById('back').addEventListener('click', () => photobooth.reset());
 

@@ -1,16 +1,16 @@
 class Photobooth{
     camera
     photostrip
-    editor
+    editor //objects needed to take and edit photostrips
 
-    sammi
+    sammi //frames
     gallery
     goat
 
     constructor(video){
         this.camera = new Camera(video)
 
-        this.sammi = new Image();
+        this.sammi = new Image(); 
         this.sammi.src = './assets/frames/sammi.png'
 
         this.gallery = new Image();
@@ -22,6 +22,7 @@ class Photobooth{
     }
 
     async run(){
+        document.getElementById("snap").style.display = "none";
         await this.camera.takePhotos();
 
         this.photostrip = new Photostrip(this.camera.photos);
@@ -55,5 +56,14 @@ class Photobooth{
         } else if (int == 2){
             editor.changeFrame(this.goat)
         }
+    }
+
+    reset(){
+        document.getElementById("photostrip").remove();
+        this.camera = new Camera(video);
+
+        document.getElementById("video-container").style.display = "";
+        document.getElementById("photo-editing-container").style.display = "none";
+        document.getElementById("snap").style.display = "";
     }
 }
