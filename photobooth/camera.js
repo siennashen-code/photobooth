@@ -99,7 +99,7 @@ class Camera {
     async takePhotos() { //take three photos consecutively with a 3 second countdown and 1 second wait between
         console.log("im here!");
         for (let i = 0; i < 3; i++) {
-            await this.countDown(3);
+            await this.countDown(0);
             await this.photoWithFlash();
             await this.wait(1);
         }

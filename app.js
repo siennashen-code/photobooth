@@ -10,6 +10,10 @@ navigator.mediaDevices.getUserMedia({
 const photobooth = new Photobooth(video);
 
 document.getElementById("photo-editing-container").style.display = "none";
+
 document.getElementById('snap').addEventListener('click', () => photobooth.run());
+document.getElementById('sammi').addEventListener('click', () => photobooth.newFrame(0));
+document.getElementById('gallery').addEventListener('click', () => photobooth.newFrame(1));
+document.getElementById('goat').addEventListener('click', () => photobooth.newFrame(2));
 document.getElementById('save').addEventListener('click', () => photobooth.save());
 

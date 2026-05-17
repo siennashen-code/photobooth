@@ -75,6 +75,14 @@
     background: rgb(241, 232, 232);
 }
 
+#frame-container{
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    left: 70%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+}
 #save{
     position:absolute;
     left:90%;
