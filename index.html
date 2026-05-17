@@ -9,15 +9,23 @@
 </head>
 
 <body>
-    <div class = "video-container">
-    <video id="video" width="640" height="480" autoplay></video>
-    
-    
-    <button id="snap">START</button>
+    <div id = "video-container">
+        <video id="video" autoplay></video>
+        <div id = "flash"></div>
+        <button id="snap">Snap!</button>
+       
     </div>
 
-    <script src="camera.js"></script>
-    <script src="scripy.js"></script>
+     
+
+    <div id = "photo-editing-container">
+        <button id="save">Save!</button>
+    </div>
+
+    <script src="photobooth/photostrip.js"></script>
+    <script src="photobooth/camera.js"></script>
+    <script src="photobooth/photobooth.js"></script>
+    <script src="app.js"></script>
 </body>
 
 
