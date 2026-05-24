@@ -50,14 +50,11 @@ class Photobooth{
 
     newFrame(int){
         if (int == 0){
-            this.photostrip.frame = "sammi"
-            this.editor.redraw()
+            this.editor.changeFrame(this.sammi)
         } else if (int == 1){
-            this.photostrip.frame = "gallery"
-            this.editor.redraw()
+            this.editor.changeFrame(this.gallery)
         } else if (int == 2){
-            this.photostrip.frame = "goat"
-            this.editor.redraw()
+            this.editor.changeFrame(this.goat)
         }
     }
 

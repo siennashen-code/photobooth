@@ -13,40 +13,18 @@ class Editor {
         this.context = this.photostrip.canvas.getContext('2d');
     }
 
-    drawFrame(){
-        let photo
+    changeFrame(photo) {
+        this.context.clearRect(0, 0, this.photostrip.canvas.width, this.photostrip.canvas.height)
+        this.photostrip.drawImages()
+        this.context.drawImage(photo, 0, 0, photo.width, photo.height, 0, 0, 300, 850)
 
-        if (this.photostrip.frame === "blank") {
-
-        } else {
-            if (this.photostrip.frame === "sammi") {
-                photo = this.photostrip.sammi
-            } else if (this.photostrip.frame === "gallery") {
-                photo = this.photostrip.gallery
-            } else if (this.photostrip.frame === "goat" ){
-                photo = this.photostrip.goat
-            }
-
-            this.context.drawImage(photo, 0, 0, photo.width, photo.height, 0, 0, 300, 850)
-        }
-
-    }
-
-    drawStickers(){
-        const stickers = document.getElementsByClassName('live-stickers')
+        const stickers = document.getElementsByClassName('live-stickers');
+        
         for (let sticker of stickers) {
-            const x = parseFloat(sticker.style.left)
-            const y = parseFloat(sticker.style.top)
+            const x = parseFloat(sticker.style.left);
+            const y = parseFloat(sticker.style.top);
             this.drawSticker(sticker, x, y)
         }
-
-    }
-
-    redraw() {
-        this.context.clearRect(0, 0, this.photostrip.canvas.width, this.photostrip.canvas.height)
-        this.drawFrame()
-        this.photostrip.drawImages()
-        this.drawStickers()
     }
 
     stickerButtons() {
@@ -54,21 +32,24 @@ class Editor {
 
         for (const sticker of stickers) {
             document.getElementById(sticker).addEventListener('click', (e) => {
-                this.createSticker(sticker)
+                let newSticker = document.createElement('img')
+                newSticker.src = `./assets/stickers/${sticker}.png`
+                newSticker.classList.add(`live-stickers`)
+
+                newSticker.style.left = `${e.clientX}px`
+                newSticker.style.top = `${e.clientY}px`
+
+                document.getElementById('live-stickers').append(newSticker)
+                newSticker.addEventListener("click", this.moveSticker(newSticker))
+
+                this.moveSticker(newSticker)
             })
         }
-
-    }
-
-    createSticker(type) {
-        let newSticker = document.createElement('img')
-        newSticker.src = `./assets/stickers/${type}.png`
-        newSticker.classList.add(`live-stickers`)
-        document.getElementById('live-stickers').append(newSticker);
-        this.moveSticker(newSticker)
     }
 
     moveSticker(sticker) {
+        console.log("moving")
+        sticker.style.position = "fixed";
         let following = true;
 
         const move = (e) => {
@@ -78,20 +59,21 @@ class Editor {
             }
         };
 
+
         const add = (e) => {
-            following = false;
             this.drawSticker(sticker, e.clientX, e.clientY)
-            document.removeEventListener("mousemove", move)
-            document.removeEventListener("click", add)
+            following = false;
+
+            document.removeEventListener("mousemove", move);
+            document.removeEventListener("click", add);
         };
 
 
-        document.addEventListener("mousemove", move)
+        document.addEventListener("mousemove", move);
 
         setTimeout(() => {
             document.addEventListener("click", add)
-        }, 0)
-
+        }, 0);
     }
 
     drawSticker(sticker, clientX, clientY) {
