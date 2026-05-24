@@ -2,6 +2,7 @@ class Photostrip {
     photoArray
     canvas = document.createElement('canvas');
     context
+    frame = "blank"
 
     constructor(photoArray){
         this.photoArray = photoArray
@@ -22,10 +23,8 @@ class Photostrip {
 
     drawImage(photo, index){
         const aspectRatio = photo.width/photo.height
-        console.log(aspectRatio);
         const newWidth = 9/10*this.canvas.width
         const newHeight = newWidth/aspectRatio
-        console.log(newWidth/newHeight);
 
         const border = 0.05* this.canvas.width
         const y = border + index * (newHeight + border)

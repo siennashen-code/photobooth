@@ -26,14 +26,16 @@ class Photobooth{
         await this.camera.takePhotos();
 
         this.photostrip = new Photostrip(this.camera.photos);
+        
         await this.photostrip.drawImages();
-
         this.displayStrip();
     }
 
     displayStrip(){
+        this.editor = new Editor(this.photostrip)
         document.getElementById("video-container").style.display = "none";
         document.getElementById("photo-editing-container").style.display = "";
+        this.editor.stickerButtons()
     }
 
     save(){
@@ -47,14 +49,15 @@ class Photobooth{
     }
 
     newFrame(int){
-        const editor = new Editor(this.photostrip)
-
         if (int == 0){
-            editor.changeFrame(this.sammi)
+            this.photostrip.frame = "sammi"
+            this.editor.redraw()
         } else if (int == 1){
-            editor.changeFrame(this.gallery)
+            this.photostrip.frame = "gallery"
+            this.editor.redraw()
         } else if (int == 2){
-            editor.changeFrame(this.goat)
+            this.photostrip.frame = "goat"
+            this.editor.redraw()
         }
     }
 

@@ -2,42 +2,40 @@
     position: relative;
     display: flex;
     flex-direction: column;
-    
+
     align-items: center;
     justify-content: center;
     min-height: 100vh;
-    
+
     background: rgb(241, 232, 232);
 }
 
-#video{
-    position: absolute; 
-    
-    top: 50%;           
+#video {
+    position: absolute;
+    top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
 
-    width: 800px;
-    height: 650px;
+    width: 40vw;
+    aspect-ratio: 80/65;
     object-fit: cover;
 }
 
-#flash{
-    position: absolute; 
-    
-    top: 50%;           
+#flash {
+    position: absolute;
+    top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    
-    width: 800px;       
-    height: 650px;
+
+    width: 40vw;
+    aspect-ratio: 80/65;
 
     background: white;
     opacity: 1;
     transition: opacity 0.3s ease;
 }
 
-#snap{
+#snap {
     position: absolute;
     top: 90%;
     left: 50%;
@@ -60,39 +58,59 @@
 
 #photostrip {
     background: white;
-
+    width: 15vw;
     flex-shrink: 0;
     flex-grow: 0;
 }
 
-#photo-editing-container{
+#photo-editing-container {
     display: flex;
     align-items: center;
     justify-content: center;
-    min-height: 100vh;
 
+    min-height: 100vh;
+    gap: 10px;
     background: rgb(241, 232, 232);
+
+    position: relative;
 }
 
-#frame-container{
+#frame-container {
     position: absolute;
     display: flex;
     flex-direction: column;
     left: 70%;
     top: 50%;
-    transform: translate(-50%, -50%);
+    transform: translateY(-50%);
     gap: 10px;
 }
-#save{
-    position:absolute;
-    left:90%;
-    top: 97%;
+
+#final-buttons {
+    position: absolute;
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+
+    left: 90%;
+    top: 95%;
     transform: translate(-50%, -50%);
 }
 
-#back{
-    position:absolute;
-    left:95%;
-    top: 97%;
+#sticker-container {
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+
+    width: 7%;
+    left: 25%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    gap: 10px;
+}
+
+.live-stickers {
+    position: fixed;
+    z-index: 9999;
+    width: 5vw;
     transform: translate(-50%, -50%);
 }
