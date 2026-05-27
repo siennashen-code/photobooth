@@ -109,8 +109,8 @@
 }
 
 .live-stickers {
-    position: fixed;
+    position: absolute;
     z-index: 9999;
     width: 5vw;
-    transform: translate(-50%, -50%);
+    /* transform: translate(-50%, -50%); */
 }

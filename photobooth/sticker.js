@@ -10,8 +10,10 @@ class Sticker {
         newSticker.src = `./assets/stickers/${sticker}.png`
         newSticker.classList.add(`live-stickers`)
 
-        newSticker.style.left = `${e.clientX}px`
-        newSticker.style.top = `${e.clientY}px`
+        const parentRect = document.getElementById("photo-editing-container").getBoundingClientRect();
+
+        newSticker.style.left = `${e.clientX - parentRect.left}px`
+        newSticker.style.top = `${e.clientY - parentRect.top}px`
 
         document.getElementById('live-stickers').append(newSticker)
 
@@ -38,7 +40,7 @@ class Sticker {
     //     this.img.style.position = "fixed"
     //     const move = (e) => {
     //         // this.dropped = true
-    //         this.img.style.left = `${e.clientX}px`
+    //         this.img.style.left = `${e.clientX- }px`
     //         this.img.style.top = `${e.clientY}px`
     //     }
 
@@ -62,18 +64,22 @@ class Sticker {
     // }
 
     drawSticker(canvas) {
-        const context = canvas.getContext('2d')
+        const context = canvas.getContext('2d');
         const rect = canvas.getBoundingClientRect();
 
-        const scaleX = canvas.width / rect.width; //To convert from screen pixels to photostrip pi
+        const scaleX = canvas.width / rect.width;
         const scaleY = canvas.height / rect.height;
 
-        const imgLeft = parseFloat(this.img.style.left);
-        const imgTop = parseFloat(this.img.style.top);
+        const parentRect = this.img.offsetParent.getBoundingClientRect();
+        const viewportX = parentRect.left + parseFloat(this.img.style.left);
+        const viewportY = parentRect.top + parseFloat(this.img.style.top);
 
-        const x = (imgLeft - rect.left - this.img.offsetWidth / 2) * scaleX;
-        const y = (imgTop - rect.top - this.img.offsetHeight / 2) * scaleY;
+        const x = (viewportX - rect.left) * scaleX;
+        const y = (viewportY - rect.top) * scaleY;
 
-        context.drawImage(this.img, x, y, this.img.offsetWidth * scaleX, this.img.offsetHeight * scaleY);
+        const width = this.img.offsetWidth * scaleX;
+        const height = this.img.offsetHeight * scaleY;
+
+        context.drawImage(this.img, x, y, width, height);
     }
 }

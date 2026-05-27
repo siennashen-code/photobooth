@@ -72,11 +72,12 @@ class Editor {
     }
 
     operateSticker(sticker) {
-        sticker.img.style.position = "fixed"
+        sticker.img.style.position = "absolute"
 
         const move = (e) => {
-            sticker.img.style.left = `${e.clientX}px`
-            sticker.img.style.top = `${e.clientY}px`
+            const parentRect = document.getElementById("photo-editing-container").getBoundingClientRect();
+            sticker.img.style.left = `${e.clientX - parentRect.left}px`
+            sticker.img.style.top = `${e.clientY - parentRect.top}px`
         }
 
         const add = (e) => {
