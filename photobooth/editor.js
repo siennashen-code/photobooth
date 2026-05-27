@@ -6,6 +6,7 @@ class Editor {
     gallery
     goat
 
+    frame
     stickers = []
 
     constructor(photostrip) {
@@ -18,9 +19,7 @@ class Editor {
         this.photostrip.drawImages()
         this.context.drawImage(photo, 0, 0, photo.width, photo.height, 0, 0, 300, 850)
 
-        const stickers = document.getElementsByClassName('live-stickers');
-        
-        for (let sticker of stickers) {
+        for (let sticker of this.stickers) {
             const x = parseFloat(sticker.style.left);
             const y = parseFloat(sticker.style.top);
             this.drawSticker(sticker, x, y)
@@ -33,6 +32,8 @@ class Editor {
         for (const sticker of stickers) {
             document.getElementById(sticker).addEventListener('click', (e) => {
                 let newSticker = document.createElement('img')
+                newSticker.id = this.getStickerName()
+
                 newSticker.src = `./assets/stickers/${sticker}.png`
                 newSticker.classList.add(`live-stickers`)
 
@@ -43,8 +44,30 @@ class Editor {
                 newSticker.addEventListener("click", this.moveSticker(newSticker))
 
                 this.moveSticker(newSticker)
+                
+                newSticker.addEventListener("click", (e) => {
+                    this.stickers = this.stickers.filter(item => item !== newSticker.id)
+                    this.changeFrame(frame)
+                    this.moveSticker(newSticker)
+                })
+
+
             })
         }
+    }
+
+    getStickerName() {
+        const parentDiv = document.getElementById('live-stickers');
+        
+        let i = 0
+        let childElement = document.getElementById(`${i}`)
+        
+        while (parentDiv && parentDiv.contains(childElement)){
+            i++
+            childElement = document.getElementById(`${i}`)
+        }
+
+        return i
     }
 
     moveSticker(sticker) {
@@ -76,6 +99,8 @@ class Editor {
         }, 0);
     }
 
+
+
     drawSticker(sticker, clientX, clientY) {
         const rect = this.photostrip.canvas.getBoundingClientRect();
 
@@ -85,6 +110,7 @@ class Editor {
         const x = (clientX - rect.left - sticker.offsetWidth / 2) * scaleX;
         const y = (clientY - rect.top - sticker.offsetHeight / 2) * scaleY;
         this.context.drawImage(sticker, x, y, sticker.offsetWidth * scaleX, sticker.offsetHeight * scaleY);
+        sticker.push(sticker.id)
     }
 
 }
