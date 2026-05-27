@@ -33,32 +33,33 @@ class Sticker {
         return i
     }
 
-    operateSticker(canvas) {
-        this.img.style.position = "fixed"
-        const move = (e) => {
-            // this.dropped = true
-            this.img.style.left = `${e.clientX}px`
-            this.img.style.top = `${e.clientY}px`
-        }
 
-        const add = (e) => {
-            // this.dropped = false
-            this.drawSticker(canvas, e.clientX, e.clientY)
-        }
+    // operateSticker(canvas) {
+    //     this.img.style.position = "fixed"
+    //     const move = (e) => {
+    //         // this.dropped = true
+    //         this.img.style.left = `${e.clientX}px`
+    //         this.img.style.top = `${e.clientY}px`
+    //     }
 
-        document.addEventListener("mousemove", move);
+    //     const add = (e) => {
+    //         // this.dropped = false
+    //         this.drawSticker(canvas, e.clientX, e.clientY)
+    //     }
 
-        this.img.addEventListener("click", (e) => {
-            if (this.floating) {
-                add(e)
-                document.removeEventListener("mousemove", move)
-                this.floating = false
-            } else {
-                document.addEventListener("mousemove", move);
-                this.floating = true
-            }
-        })
-    }
+    //     document.addEventListener("mousemove", move);
+
+    //     this.img.addEventListener("click", (e) => {
+    //         if (this.floating) {
+    //             add(e)
+    //             document.removeEventListener("mousemove", move)
+    //             this.floating = false
+    //         } else {
+    //             document.addEventListener("mousemove", move);
+    //             this.floating = true
+    //         }
+    //     })
+    // }
 
     drawSticker(canvas) {
         const context = canvas.getContext('2d')
