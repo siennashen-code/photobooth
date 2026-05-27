@@ -8,8 +8,6 @@ Overall, javascript was not too difficult to pick up; a lot of the syntax is qui
 
 I really appreciated the promise/async/await feature of javascript, because I needed it to properly time when each line for the camera code needed to be executed. The camera had to take photos after the countdown, so I had the camera await for a countdown to run through. 
 
-I did struggle a lot with formatting elements on the photobooth app. Elements behave differently depending on their positioning mode (fixed, absolute, etc.), and each mode will have a different affect on the element depending on the positioning of its parent containers. And when you draw things onto a canvas, you need to use the canvases own, internal grid system rather than the grid of the entire page. So I had to do a lot of conversions and often got lost in properly formatting things. It took me days just to get the stickers to follow the mouse correctly and be drawn onto the photostrip at the correct location :-(
-
 ### Resources I used ###
 For my programming language research, I used:
 - [MDN javascript guide](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide)
@@ -26,6 +24,14 @@ I made classes for each component of the photobooth:
 3. Editor, which has the changeFrame, moveSticker, and drawSticker methods used to, well, change the frames and add stickers to the photostrip canvas.
 
 The instances of these classes are created in the Photobooth class, which coordinates these objects through methods like run, displayStrip, and reset. The Photobooth has a save method which downloads photostrips as png files onto the browser, so you can send photos to your friends and foes. 
+
+Finally, the instance of the photobooth class is created in app.js, where event listeners are created for the buttons that map to methods from photobooth.
+
+### Struggles ###
+I did struggle a lot with formatting elements on the photobooth app. Elements behave differently depending on their positioning mode (fixed, absolute, etc.), and each mode will have a different affect on the element depending on the positioning of its parent containers. And when you draw things onto a canvas, you need to use the canvases own, internal grid system rather than the grid of the entire page. So I had to do a lot of conversions and often got lost in properly formatting things. It took me days just to get the stickers to follow the mouse correctly and be drawn onto the photostrip at the correct location. What I found quite helpful was clicking inspect on my web page and experimenting with the formatting there, then finalizing things on my css file. 
+
+I also had some trouble coordinating the stickers and frame changes. I originally had the stickers drawn onto the photostrip just once, but then when you change frames, those stickers would get lost because the changeFrame function has to redraw the entire photostrip. So then I decided to store each sticker in an array, and the stickers get redrawn each time changeFrame runs. Thinking ahead about repositioning stickers, I planned that if you click on a placed down sticker, then that sticker gets removed from the array, effectively taking the sticker off of the photostrip. So I needed to give each sticker a distincy ID. Thus I wrote another function which took in the existing stickers and gave the new sticker an id with a new number. So the first sticker had an id of 1, the second 2, and so on.
+
 
 ### Failures ###
 (As of 5/26), I failed to allow the user to edit where stickers are positioned after initially placing them down. I have two event listeners for the stickers: one for picking them up, and one for dropping them down. However, the pick-up event listener seems to override the drop, and you can never let go of stickers once you initially click them. With more time, I would make a class for the stickers with a field that tells which state the sticker is in: dropped down, or moving. That way, I can control which event listener runs.
