@@ -6,7 +6,7 @@ class Editor {
     gallery
     goat
 
-    frame
+    frame = 3
     stickers = []
 
     constructor(photostrip) {
@@ -17,12 +17,17 @@ class Editor {
     changeFrame(photo) {
         this.context.clearRect(0, 0, this.photostrip.canvas.width, this.photostrip.canvas.height)
         this.photostrip.drawImages()
-        this.context.drawImage(photo, 0, 0, photo.width, photo.height, 0, 0, 300, 850)
+        
+        if (this.frame != 3) {
+            this.context.drawImage(photo, 0, 0, photo.width, photo.height, 0, 0, 300, 850)
+        }
 
         for (let sticker of this.stickers) {
-            const x = parseFloat(sticker.style.left);
-            const y = parseFloat(sticker.style.top);
-            this.drawSticker(sticker, x, y)
+            if (sticker.floating == false) {
+                const x = parseFloat(sticker.img.style.left)
+                const y = parseFloat(sticker.img.style.top)
+                sticker.drawSticker(this.photostrip.canvas)
+            }
         }
     }
 
@@ -31,86 +36,116 @@ class Editor {
 
         for (const sticker of stickers) {
             document.getElementById(sticker).addEventListener('click', (e) => {
-                let newSticker = document.createElement('img')
-                newSticker.id = this.getStickerName()
-
-                newSticker.src = `./assets/stickers/${sticker}.png`
-                newSticker.classList.add(`live-stickers`)
-
-                newSticker.style.left = `${e.clientX}px`
-                newSticker.style.top = `${e.clientY}px`
-
-                document.getElementById('live-stickers').append(newSticker)
-                newSticker.addEventListener("click", this.moveSticker(newSticker))
-
-                this.moveSticker(newSticker)
-                
-                newSticker.addEventListener("click", (e) => {
-                    this.stickers = this.stickers.filter(item => item !== newSticker.id)
-                    this.changeFrame(frame)
-                    this.moveSticker(newSticker)
-                })
-
-
+                let newSticker = new Sticker(e, sticker)
+                this.stickers.push(newSticker)
+                this.operateSticker(newSticker)
             })
         }
     }
 
-    getStickerName() {
-        const parentDiv = document.getElementById('live-stickers');
-        
-        let i = 0
-        let childElement = document.getElementById(`${i}`)
-        
-        while (parentDiv && parentDiv.contains(childElement)){
-            i++
-            childElement = document.getElementById(`${i}`)
-        }
-
-        return i
-    }
-
-    moveSticker(sticker) {
-        console.log("moving")
-        sticker.style.position = "fixed";
-        let following = true;
+    operateSticker(sticker) {
+        sticker.floating = true
+        sticker.img.style.position = "fixed"
 
         const move = (e) => {
-            if (following) {
-                sticker.style.left = `${e.clientX}px`;
-                sticker.style.top = `${e.clientY}px`;
-            }
-        };
-
+            sticker.img.style.left = `${e.clientX}px`
+            sticker.img.style.top = `${e.clientY}px`
+        }
 
         const add = (e) => {
-            this.drawSticker(sticker, e.clientX, e.clientY)
-            following = false;
-
-            document.removeEventListener("mousemove", move);
-            document.removeEventListener("click", add);
-        };
-
+            sticker.drawSticker(this.photostrip.canvas)
+        }
 
         document.addEventListener("mousemove", move);
 
-        setTimeout(() => {
-            document.addEventListener("click", add)
-        }, 0);
+        sticker.img.addEventListener("click", (e) => {
+            console.log(sticker.floating)
+            if (sticker.floating) {
+                console.log("adding")
+                document.removeEventListener("mousemove", move)
+                add(e)
+                sticker.floating = false
+            } else {
+                console.log("moving")
+                document.addEventListener("mousemove", move);
+                sticker.floating = true
+                this.changeFrame(this.frame)
+            }
+        })
+
+        // sticker.img.addEventListener("click", (e) => {
+        //     if (sticker.floating) {
+        //         console.log("moving")
+        //         sticker.img.removeEventListener("click", add)
+        //         document.addEventListener("mousemove", move);
+        //         this.changeFrame(this.frame)
+        //         sticker.added = false
+        //     } else {
+        //         document.removeEventListener("mousemove", move)
+        //         sticker.img.addEventListener("click", add)
+        //         sticker.img.click()
+        //         sticker.added = true
+        //     }
+        // })
     }
 
+    //     operateSticker(sticker) {
+    //         sticker.style.position = "fixed";
+
+    //         const move = (e) => {
+    //             sticker.style.left = `${e.clientX}px`;
+    //             sticker.style.top = `${e.clientY}px`;
+    //         };
+
+    //         const add = (e) => {
+    //             this.drawSticker(sticker, e.clientX, e.clientY)
+    //             document.removeEventListener("mousemove", move);
+    //             document.removeEventListener("click", add);
+    //         };
 
 
-    drawSticker(sticker, clientX, clientY) {
-        const rect = this.photostrip.canvas.getBoundingClientRect();
+    //         document.addEventListener("mousemove", move);
 
-        const scaleX = this.photostrip.canvas.width / rect.width; //To convert from screen pixels to photostrip pi
-        const scaleY = this.photostrip.canvas.height / rect.height;
+    //         setTimeout(() => {
+    //             document.addEventListener("click", add)
+    //         }, 0);
 
-        const x = (clientX - rect.left - sticker.offsetWidth / 2) * scaleX;
-        const y = (clientY - rect.top - sticker.offsetHeight / 2) * scaleY;
-        this.context.drawImage(sticker, x, y, sticker.offsetWidth * scaleX, sticker.offsetHeight * scaleY);
-        sticker.push(sticker.id)
-    }
+
+    //     }
+
+    //     moveSticker(sticker) {
+    //         console.log("moving")
+    //         sticker.style.position = "fixed";
+    //         let following = true;
+
+    //         const move = (e) => {
+    //             if (following) {
+    //                 sticker.style.left = `${e.clientX}px`;
+    //                 sticker.style.top = `${e.clientY}px`;
+    //             }
+    //         };
+
+
+    //         const add = (e) => {
+    //             this.drawSticker(sticker, e.clientX, e.clientY)
+    //             following = false;
+
+    //             document.removeEventListener("mousemove", move);
+    //             document.removeEventListener("click", add);
+    //         };
+
+
+    //         document.addEventListener("mousemove", move);
+
+    //         setTimeout(() => {
+    //             document.addEventListener("click", add)
+    //         }, 0);
+    //     }
+
+
+
+
+
+    // }
 
 }

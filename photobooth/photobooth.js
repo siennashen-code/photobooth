@@ -58,7 +58,7 @@ class Photobooth{
         } else if (int == 2){
             this.editor.changeFrame(this.goat)
             this.editor.frame = this.goat
-        }
+        } 
     }
 
     reset(){
