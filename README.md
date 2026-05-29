@@ -1,4 +1,4 @@
-# Sienna's Photobooth!
+# My Photobooth!
 Note: For security purposes, your browser won't let you download your photobooth images if you run index.html directly on the broswer. To use the download feature, you have to install the Live Server extension and then run index.html through that. 
 
 ## Reflection
@@ -40,6 +40,16 @@ I also had some trouble coordinating the stickers and frame changes. I originall
 
 (5/28): I solved the sticker problem by making a sticker class! Everytime a sticker button is clicked, a new Sticker object is created and it is added to the stickers array in Editor. The sticker's img value is set too. By default, the floating value is true. In the Editor class, an event listener for clicking this sticker is created. If the sticker is clicked while floating, then it is drawn. If the sticker is already drawn (!floating) when clicked, then it is pulled out of the photostrip and is now floating. If the sticker is placed down somewhere not on the canvas, then the sticker is removed from the sticker array and no longer exists on the screen.  
 
-I failed to add resizing and rotating features to my stickers due to a lack of time. Especially since I'm not using any libraries, doing a bunch of transformations on one sticker is kind of complicated, especially if clicking on a sticker could have multiple effects (resize, rotate, or shift).
+I failed to add resizing and rotating features to my stickers. Especially since I'm not using any libraries, doing a bunch of transformations on one sticker is kind of complicated, mainly because clicking on a sticker could have multiple effects (resize, rotate, or shift). But with more time, I'd hope to add more sticker transformations!!
  
-## Sources: 
+## References: 
+I got most of my assets from Pinterest and Canva
+
+- Background: https://www.pinterest.com/pin/351912466842675/
+- Bow sticker: https://www.pinterest.com/pin/68748154914/
+- Glitter sticker: https://www.pinterest.com/pin/796996465338375476/
+- Heart sticker: https://www.pinterest.com/pin/4011087181790627/
+- Star sticker: https://www.pinterest.com/pin/1148558711221475455/ 
+- Crowd in museum frame: https://www.nytimes.com/2014/10/12/travel/the-art-of-slowing-down-in-a-museum.html 
+
+All other assets were made on Canva!
