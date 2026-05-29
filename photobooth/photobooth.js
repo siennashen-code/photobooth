@@ -41,7 +41,7 @@ class Photobooth {
         clicker.href = dataURL;
 
         const now = new Date();
-        clicker.download = `${now.getDate()}-${now.getMonth()}-${now.getFullYear()}-photobooth.png`;
+        clicker.download = `${now.getMonth()}-${now.getDate()}-${now.getFullYear()}-photostrip.png`;
         clicker.click();
     }
 

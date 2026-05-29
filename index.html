@@ -2,25 +2,39 @@
 <html>
 
 <head>
-    <title>Testing UWU</title>
     <link rel="stylesheet" href="styles.css">
-
-
 </head>
 
 <body>
+    <img src = "./assets/title.png" id = "title">
+
     <div id="video-container">
         <video id="video" autoplay></video>
         <div id="flash"></div>
-        <button id="snap">Snap!</button>
+        <button id="snap">
+            <img src="./assets/buttons/snap.png" id = "snap-button-img">
+        </button>
 
     </div>
 
     <div id="photo-editing-container">
         <div id="frame-container">
-            <button id="sammi">Sammi</button>
-            <button id="gallery">Gallery</button>
-            <button id="goat">GOAT</button>
+            <button id= 'sammi' class = 'frame-button'>
+                <img src="./assets/buttons/dog.png" class = "frame-button-img">
+            </button>
+            <button id="gallery" class = 'frame-button'>
+                <img src="./assets/buttons/museum.png" class = "frame-button-img">
+            </button>
+
+            <button id="goat" class = 'frame-button'>
+                <img src="./assets/buttons/celebrity.png" class = "frame-button-img">
+            </button>
+
+            <button id="blank" class = 'frame-button'>
+                <img src="./assets/buttons/blank.png" class = "frame-button-img">
+            </button>
+
+
         </div>
 
         <div id="sticker-container">
@@ -31,8 +45,13 @@
         </div>
 
         <div id="final-buttons">
-            <button id="save">Save!</button>
-            <button id="back">Back</button>
+            <button id="save" class = 'final-button'>
+                 <img src="./assets/buttons/save.png" class = "final-button-img">
+            </button>
+
+            <button id="back" class = 'final-button'>
+                 <img src="./assets/buttons/back.png" class = "final-button-img">
+            </button>
         </div>
 
         <div id="live-stickers"></div>
