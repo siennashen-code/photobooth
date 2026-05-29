@@ -1,4 +1,4 @@
-class Photobooth {
+class Photobooth { //Coordinates all camera, photostrip, and editor objects
     camera
     photostrip
     editor
@@ -45,7 +45,7 @@ class Photobooth {
         clicker.click();
     }
 
-    reset() {
+    reset() { //back button
         document.getElementById("photostrip").remove();
         document.getElementById("live-stickers").innerHTML = "";
 

@@ -1,13 +1,14 @@
-class Editor {
+class Editor { //class with all the change frame and add sticker functions
     photostrip
     context
 
+    //frames
     sammi
     gallery
     goat
 
-    frame = 3
-    stickers = []
+    frame = 3 //which frame currenly on: 0 for sammi, 1 for gallery, 2 for me <3, 3 for blank
+    stickers = [] //stickers objects created
 
     constructor(photostrip) {
         this.photostrip = photostrip
@@ -47,13 +48,17 @@ class Editor {
     }
 
     changeFrame(photo) {
+        //clear canvas to redraw
         this.context.clearRect(0, 0, this.photostrip.canvas.width, this.photostrip.canvas.height)
+        
         this.photostrip.drawImages()
-
+        
+        //draw frame if not blank
         if (this.frame < 3) {
             this.context.drawImage(photo, 0, 0, photo.width, photo.height, 0, 0, 300, 850)
         }
 
+        //redraw stickers
         for (let sticker of this.stickers) {
             if (sticker.floating == false) {
                 const x = parseFloat(sticker.img.style.left)
@@ -75,24 +80,24 @@ class Editor {
         }
     }
 
-    operateSticker(sticker) {
+    operateSticker(sticker) { //handles clicking on stikers
         sticker.img.style.position = "absolute"
 
-        const move = (e) => {
+        const move = (e) => { //sticker follows your mouse
             const parentRect = document.getElementById("photo-editing-container").getBoundingClientRect();
             sticker.img.style.left = `${e.clientX - parentRect.left}px`
             sticker.img.style.top = `${e.clientY - parentRect.top}px`
         }
 
-        const add = (e) => {
+        const add = (e) => { //draw sticker onto canvas
             const rect = this.photostrip.canvas.getBoundingClientRect();
 
-            const leftEdge = rect.left
-            const rightEdge = rect.right
-            const topEdge = rect.top
+            const leftEdge = rect.left - sticker.img.offsetWidth 
+            const rightEdge = rect.right 
+            const topEdge = rect.top - sticker.img.offsetHeight
             const bottomEdge = rect.bottom
 
-            // Check if the click was outside the horizontal bounds of the canvas
+            // Check if the click was outside bounds of canvas
             if (e.clientX < leftEdge || e.clientX > rightEdge || e.clientY < topEdge || e.clientY > bottomEdge) {
                 sticker.img.remove()
                 this.stickers = this.stickers.filter(s => s !== sticker);
@@ -101,7 +106,7 @@ class Editor {
             }
         }
 
-        const processClick = (e) => {
+        const processClick = (e) => { //determine whether to add or move upon click
             console.log(sticker.floating)
 
             if (sticker.floating) {
@@ -120,9 +125,5 @@ class Editor {
 
         document.addEventListener("mousemove", move);
         sticker.img.addEventListener("click", processClick)
-    }
-
-    resetListeners() {
-        document.removeEventListener("mousemove")
     }
 }

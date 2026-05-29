@@ -1,7 +1,7 @@
-class Sticker {
-    id
-    img
-    floating
+class Sticker { //functions and variables for stickers
+    id //id of sticker, used for removing sticker from sticker array
+    img 
+    floating //whether or not sticker is floating, determines what happens after click
 
     constructor(e, sticker) {
         let newSticker = document.createElement('img')
@@ -22,7 +22,7 @@ class Sticker {
         this.floating = true
     }
 
-    getStickerName() {
+    getStickerName() { //id is a unique number
         const parentDiv = document.getElementById('live-stickers');
         let i = 0
         let childElement = document.getElementById(`${i}`)
@@ -35,35 +35,8 @@ class Sticker {
         return i
     }
 
-
-    // operateSticker(canvas) {
-    //     this.img.style.position = "fixed"
-    //     const move = (e) => {
-    //         // this.dropped = true
-    //         this.img.style.left = `${e.clientX- }px`
-    //         this.img.style.top = `${e.clientY}px`
-    //     }
-
-    //     const add = (e) => {
-    //         // this.dropped = false
-    //         this.drawSticker(canvas, e.clientX, e.clientY)
-    //     }
-
-    //     document.addEventListener("mousemove", move);
-
-    //     this.img.addEventListener("click", (e) => {
-    //         if (this.floating) {
-    //             add(e)
-    //             document.removeEventListener("mousemove", move)
-    //             this.floating = false
-    //         } else {
-    //             document.addEventListener("mousemove", move);
-    //             this.floating = true
-    //         }
-    //     })
-    // }
-
     drawSticker(canvas) {
+        //convert from coordinates with respect to viewport to canvas' internal coordinate system
         const context = canvas.getContext('2d');
         const rect = canvas.getBoundingClientRect();
 

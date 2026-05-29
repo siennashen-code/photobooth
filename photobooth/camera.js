@@ -8,21 +8,21 @@ class Camera {
     }
 
     wait(seconds) { //used to stop running a function for certain time by creating a promise
-        return new Promise(resolve => setTimeout(resolve, 1000 * seconds));
+        return new Promise(resolve => setTimeout(resolve, 1000 * seconds))
     }
 
     async countDown(seconds) { //counts down and displays on web page
-        const counter = document.createElement('div');
-        counter.id = 'counter';
-        document.getElementById("video-container").appendChild(counter);
+        const counter = document.createElement('div')
+        counter.id = 'counter'
+        document.getElementById("video-container").appendChild(counter)
 
         while (seconds > 0) {
-            counter.textContent = seconds;
-            await this.wait(1);
-            seconds--;
+            counter.textContent = seconds
+            await this.wait(1)
+            seconds--
         }
 
-        counter.remove();
+        counter.remove()
     }
 
     takePhoto() { //take frame from video and save it onto canvas object
@@ -31,6 +31,7 @@ class Camera {
         photo.width = 800;
         photo.height = 650;
 
+        //crop video to same aspect ratio as photo
         const videoWidth = this.video.videoWidth;
         const videoHeight = this.video.videoHeight;
         const videoRatio = videoWidth / videoHeight;
@@ -42,20 +43,15 @@ class Camera {
         let cropY;
 
         if (videoRatio > photoRatio) {
-
-            cropHeight = videoHeight;
-            cropWidth = videoHeight * photoRatio;
-
-            cropX = (videoWidth - cropWidth) / 2;
-            cropY = 0;
-
+            cropHeight = videoHeight
+            cropWidth = videoHeight * photoRatio
+            cropX = (videoWidth - cropWidth) / 2
+            cropY = 0
         } else {
-
-            cropWidth = videoWidth;
-            cropHeight = videoWidth / photoRatio;
-
-            cropX = 0;
-            cropY = (videoHeight - cropHeight) / 2;
+            cropWidth = videoWidth
+            cropHeight = videoWidth / photoRatio
+            cropX = 0
+            cropY = (videoHeight - cropHeight) / 2
         }
 
         context.drawImage(
@@ -70,15 +66,12 @@ class Camera {
             photo.height
         );
 
-        this.photos.push(photo);
-
-     
+        this.photos.push(photo)
     }
 
     async flash() { //a white rectangle to imitate flashing of camera
         const flash = document.createElement('div');
         flash.id = 'flash';
-
 
         document.getElementById('video-container').appendChild(flash);
 
@@ -87,7 +80,6 @@ class Camera {
         await this.wait(0.3);
 
         flash.remove();
-
     }
 
     async photoWithFlash() {
@@ -102,5 +94,4 @@ class Camera {
             await this.wait(1);
         }
     }
-
 }

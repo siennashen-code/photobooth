@@ -1,8 +1,7 @@
-class Photostrip {
-    photoArray
+class Photostrip { //functions and variables for photostrip
+    photoArray //array of photos taken by camera
     canvas = document.createElement('canvas');
     context
-    frame = "blank"
 
     constructor(photoArray){
         this.photoArray = photoArray
@@ -15,13 +14,13 @@ class Photostrip {
         
     }
 
-    drawImages(){
+    drawImages(){ //draw photos onto canvas
         this.context.fillStyle = "white"
         this.context.fillRect(0,0, this.canvas.width, this.canvas.height)
         this.photoArray.forEach((photo, index) => {this.drawImage(photo,index)});
     }
 
-    drawImage(photo, index){
+    drawImage(photo, index){ //draw individual photo onto canvas
         const aspectRatio = photo.width/photo.height
         const newWidth = 9/10*this.canvas.width
         const newHeight = newWidth/aspectRatio

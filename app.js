@@ -7,5 +7,5 @@ navigator.mediaDevices.getUserMedia({
 })
 .then(stream => video.srcObject = stream)
 
-const photobooth = new Photobooth(video);
+const photobooth = new Photobooth(video); //run photobooth
 photobooth.run();

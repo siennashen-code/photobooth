@@ -21,7 +21,8 @@ I got the live video on my photobooth app to work using this other guy's video: 
 I made classes for each component of the photobooth: 
 1.  Camera, which has the countDown and takePhotos functions. It also stores the photos captured in an array, which is kind of like the Photos app on your phone. 
 2. Photostrip, which reads in the photo array and arranges them into a photostrip (an HTML canvas object)
-3. Editor, which has the changeFrame, moveSticker, and drawSticker methods used to, well, change the frames and add stickers to the photostrip canvas.
+3. Sticker, whose instances contain not only the sticker image (in the variable "img"), but also whether or not the sticker is floating (the "floating" variable), which will determine what happens when the sticker is clicked. 
+4. Editor, which has the changeFrame, moveSticker, and drawSticker methods used to, well, change the frames and add/move stickers on the photostrip canvas. The editor also contains an array called "sticker" which stores added stickers. This is necessary because every time you move a sticker or change a frame, the entire photostrip needs to be redrawn and thus the positions of the other stickers must be saved somewhere. 
 
 The instances of these classes are created in the Photobooth class, which coordinates these objects through methods like run, displayStrip, and reset. The Photobooth has a save method which downloads photostrips as png files onto the browser, so you can send photos to your friends and foes. 
 
@@ -35,5 +36,10 @@ I also had some trouble coordinating the stickers and frame changes. I originall
 
 ### Failures ###
 (As of 5/26), I failed to allow the user to edit where stickers are positioned after initially placing them down. I have two event listeners for the stickers: one for picking them up, and one for dropping them down. However, the pick-up event listener seems to override the drop, and you can never let go of stickers once you initially click them. With more time, I would make a class for the stickers with a field that tells which state the sticker is in: dropped down, or moving. That way, I can control which event listener runs.
- 
 - [Github commit of my sticky stickers](https://github.com/siennashen-code/photobooth/commit/c1ee3fb43eb94346ba85fec9e9ccde92ab69f34e)
+
+(5/28): I solved the sticker problem by making a sticker class! Everytime a sticker button is clicked, a new Sticker object is created and it is added to the stickers array in Editor. The sticker's img value is set too. By default, the floating value is true. In the Editor class, an event listener for clicking this sticker is created. If the sticker is clicked while floating, then it is drawn. If the sticker is already drawn (!floating) when clicked, then it is pulled out of the photostrip and is now floating. If the sticker is placed down somewhere not on the canvas, then the sticker is removed from the sticker array and no longer exists on the screen.  
+
+I failed to add resizing and rotating features to my stickers due to a lack of time. Especially since I'm not using any libraries, doing a bunch of transformations on one sticker is kind of complicated, especially if clicking on a sticker could have multiple effects (resize, rotate, or shift).
+ 
+## Sources: 
